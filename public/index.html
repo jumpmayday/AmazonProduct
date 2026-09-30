@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美亚查询</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <p class="eyebrow">个人使用 · 只查美国站</p>
+      <h1>美亚查询</h1>
+      <p class="lede">按关键词看搜索数据和竞品店铺，按类目看市场。数字只来自你刚才这次手动请求的 Sorftime 接口。</p>
+    </header>
+
+    <section id="status" class="status" aria-live="polite">
+      <h2>正在确认配置</h2>
+      <p>密钥放在环境变量 <code>SORFTIME_ACCOUNT_SK</code>。没有这个变量时，页面仍会打开，但不会向 Sorftime 发请求，也不会出现示例销量。</p>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="查询方式">
+      <button id="tab-keyword" type="button" role="tab" aria-selected="true" aria-controls="panel-keyword">关键词</button>
+      <button id="tab-category" type="button" role="tab" aria-selected="false" aria-controls="panel-category">类目市场</button>
+    </div>
+
+    <main>
+      <section id="panel-keyword" role="tabpanel" aria-labelledby="tab-keyword">
+        <form id="keyword-form" class="query">
+          <label for="keyword-input">关键词</label>
+          <div class="query-row">
+            <input id="keyword-input" name="keyword" type="text" maxlength="200" autocomplete="off" placeholder="例如 power bank" required>
+            <button id="keyword-submit" type="submit">查询关键词</button>
+          </div>
+          <p class="hint">一次查询会调用 KeywordQuery 和 KeywordSearchResults。官方文档标注各约 5 次 Request，合计约 10 次。实际消耗以返回结果为准。</p>
+        </form>
+        <div id="keyword-result" class="result"></div>
+      </section>
+
+      <section id="panel-category" role="tabpanel" aria-labelledby="tab-category" hidden>
+        <form id="category-search-form" class="query">
+          <label for="category-name">按名称搜索类目</label>
+          <div class="query-row">
+            <input id="category-name" name="name" type="text" maxlength="80" autocomplete="off" placeholder="例如 蓝牙耳机" required>
+            <button id="category-search-submit" type="submit">搜索类目</button>
+          </div>
+          <p class="hint">调用 CategorySearchFromName，官方文档标注约 1 次 Request。最多返回 5 个类目，选中后再看市场。</p>
+        </form>
+
+        <form id="category-market-form" class="query">
+          <label for="node-id">直接用 NodeId 看市场</label>
+          <div class="query-row">
+            <input id="node-id" name="nodeId" type="text" maxlength="40" autocomplete="off" placeholder="例如 3743561" required>
+            <button id="category-market-submit" type="submit">查看市场</button>
+          </div>
+          <p class="hint">调用 CategoryRequest（约 5 次）和销量趋势 CategoryTrend（约 2 次）。只查当前榜单，不回看历史。</p>
+        </form>
+
+        <div class="query tree-query">
+          <button id="tree-load" type="button">加载类目树</button>
+          <p class="hint">调用 CategoryTree，官方文档标注约 5 次 Request，数据量较大。成功后缓存在本次运行的进程里，再次加载不再扣费。需要更新时点「重新加载」。</p>
+        </div>
+        <div id="category-result" class="result"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>美国站 domain = 1。接口按 Sorftime 实际用量计费，没有定时刷新，也没有登录。</p>
+    </footer>
+  </div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

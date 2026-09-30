@@ -1,0 +1,14 @@
+{
+  "name": "amazon-product",
+  "private": true,
+  "version": "1.0.0",
+  "description": "个人使用的亚马逊美国站查询页，数据来自 Sorftime 官方 HTTP API",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test"
+  }
+}
