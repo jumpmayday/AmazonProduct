@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>亚马逊商品销量</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">销</span>
+      <div>
+        <p class="eyebrow">Selling Partner API · 卖家订单</p>
+        <h1>亚马逊商品销量</h1>
+      </div>
+    </div>
+    <div class="top-meta" id="top-meta">正在读取状态…</div>
+  </header>
+
+  <main>
+    <section id="banner" class="banner" hidden aria-live="polite"></section>
+
+    <section class="panel toolbar">
+      <form id="filter-form" class="filters">
+        <label>开始
+          <input id="start-date" name="start" type="date" required>
+        </label>
+        <label>结束
+          <input id="end-date" name="end" type="date" required>
+        </label>
+        <label class="grow">商品
+          <select id="product-select" name="product">
+            <option value="">全部商品</option>
+          </select>
+        </label>
+        <button class="primary" type="submit">查询</button>
+      </form>
+      <button id="sync-button" class="sync" type="button">立即抓取</button>
+    </section>
+
+    <section class="kpis" id="kpis" aria-label="汇总"></section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>每日销量</h2>
+        <p id="chart-note" class="muted"></p>
+      </div>
+      <div id="chart" class="chart"></div>
+    </section>
+
+    <section class="split">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>按商品</h2>
+        </div>
+        <div id="product-table" class="table-wrap"></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>按日期</h2>
+        </div>
+        <div id="daily-table" class="table-wrap"></div>
+      </section>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>抓取记录</h2>
+        <p class="muted">定时任务和「立即抓取」共用同一条队列。</p>
+      </div>
+      <div id="runs" class="table-wrap"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>商品销售额取订单货款（ITEM）并减去折扣，不含运费和税费。已取消、无法配送的订单不计入。没有货款明细的件数会单独标出，不会用单价估算。日期按环境变量 <code>SALES_TIMEZONE</code> 归日。</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
